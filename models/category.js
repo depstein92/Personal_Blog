@@ -10,7 +10,7 @@ const categorySchema = mongoose.Schema({
   }
 });
 
-const Category = module.exports = mongoose.model('Category', categorySchema);
+const Category = module.exports = mongoose.model('categories', categorySchema);
 
 //get Category function
 
