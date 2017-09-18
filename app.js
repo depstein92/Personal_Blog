@@ -3,32 +3,42 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
-const flash = require('connect-flash');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/personalBlog');
+const db = mongoose.connection;
+// Port
+const port = 3000;
+// init app
 const app = express();
 
-const routes = require('./routes/index');
+const index = require('./routes/index');
+const articles = require('./routes/articles');
+const categories= require('./routes/categories');
+const manage = require('./routes/manage');
 
-app.use('/', routes);
-
-
-
+// View Setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Express messages
 app.use(require('connect-flash')());
-// taken from connect-flash example
 app.use((req, res, next) => {
   res.locals.messages = require('express-messages')(req, res);
   next();
 });
 
 
-//Middleware options, could eb outdated be wary!
+
+
+// Express validator
 app.use(expressValidator({
   errorFormatter: (param, msg, value) => {
       const namespace = param.split('.')
@@ -43,11 +53,14 @@ app.use(expressValidator({
       msg   : msg,
       value : value
     };
-  }
-}));
+  } }))
 
 
+  app.use('/', index);
+  app.use('/articles', articles);
+  app.use('/categories', categories);
+  app.use('/manage', manage);
 
-app.listen(3000, () => {
-  console.log('Server started on port 3000 ');
+app.listen(port, () => {
+  console.log('Server started on port '+port);
 });

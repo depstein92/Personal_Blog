@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheets" href="/bower_components/bootstrap">
+    <link rel="stylesheets" href="/css/style.css">
+    <title></title>
+  </head>
+  <body>
+    <table class='table table-striped'>
+      <tr>
+        <th>Category Title</th>
+        <th></th>
+        <% categories.forEach(function(topic){ %>
+      </tr>
+      <tr>
+          <td><%- topic.title  %></td>
+          <td><a class="btn btn-tiny btn-default" href='/manage/categories/edit/<%= topic._id %>'>Edit</a></td>
+          </tr>
+      </tr>
+      <% }) %>
+  </body>
+</html>

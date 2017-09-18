@@ -5,6 +5,10 @@
     <title></title>
   </head>
   <body>
-    <%- title  %>
+    <ul>
+    <% categories.forEach(function(category){  %>
+     <a href="/routes/category/<%= category._id %>"><%- category.title %></a> 
+    <% }) %>
+  </ul>
   </body>
 </html>
